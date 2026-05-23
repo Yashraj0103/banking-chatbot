@@ -4,7 +4,7 @@ An AI-powered Banking Support Chatbot built with **Retrieval-Augmented Generatio
 
 ## 🚀 Live Demo
 
-> **Deployed URL:** `https://banking-chatbot-iu08.onrender.com/` 
+> **Deployed URL:** `https://banking-chatbot-iu08.onrender.com` 
 
 ---
 
