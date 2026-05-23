@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Banking Chatbot – Architecture Diagram</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0f1117;
+      color: #e0e0e0;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 1.6rem;
+      color: #ffffff;
+      margin-bottom: 6px;
+      letter-spacing: 1px;
+    }
+    .subtitle {
+      text-align: center;
+      color: #888;
+      font-size: 0.85rem;
+      margin-bottom: 48px;
+    }
+
+    .diagram {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      align-items: center;
+    }
+
+    /* ── Row ── */
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      width: 100%;
+    }
+
+    /* ── Box ── */
+    .box {
+      border-radius: 12px;
+      padding: 18px 24px;
+      text-align: center;
+      min-width: 160px;
+      position: relative;
+    }
+    .box .title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .box .label {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .box .sub {
+      font-size: 0.72rem;
+      opacity: 0.7;
+      margin-top: 4px;
+    }
+
+    /* colours */
+    .blue   { background: #1a3c6e; border: 2px solid #2a5cae; }
+    .green  { background: #1a4a2e; border: 2px solid #2a8a4e; }
+    .purple { background: #3a1a6e; border: 2px solid #6a3ace; }
+    .orange { background: #4a2a0a; border: 2px solid #c87a1a; }
+    .teal   { background: #0a3a3a; border: 2px solid #1a8a8a; }
+    .red    { background: #4a1a1a; border: 2px solid #c84a4a; }
+    .gray   { background: #2a2a2a; border: 2px solid #555; }
+
+    /* ── Arrow ── */
+    .arrow-down {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 2px 0;
+      gap: 0;
+    }
+    .arrow-down .line {
+      width: 2px;
+      height: 28px;
+      background: #444;
+    }
+    .arrow-down .head {
+      width: 0;
+      height: 0;
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-top: 10px solid #444;
+    }
+    .arrow-down .alabel {
+      font-size: 0.68rem;
+      color: #666;
+      margin-top: 3px;
+      text-align: center;
+    }
+
+    .arrow-right {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      flex-shrink: 0;
+    }
+    .arrow-right .line {
+      width: 28px;
+      height: 2px;
+      background: #444;
+    }
+    .arrow-right .head {
+      width: 0;
+      height: 0;
+      border-top: 7px solid transparent;
+      border-bottom: 7px solid transparent;
+      border-left: 10px solid #444;
+    }
+
+    /* ── RAG section ── */
+    .rag-box {
+      border: 2px dashed #6a3ace;
+      border-radius: 16px;
+      padding: 24px 32px;
+      margin: 4px 0;
+      width: 100%;
+      max-width: 760px;
+    }
+    .rag-title {
+      text-align: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #9a6aee;
+      margin-bottom: 20px;
+    }
+    .rag-steps {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .step {
+      background: #2a1a4e;
+      border: 1px solid #6a3ace;
+      border-radius: 8px;
+      padding: 10px 14px;
+      text-align: center;
+      min-width: 110px;
+    }
+    .step .num {
+      font-size: 0.65rem;
+      color: #9a6aee;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .step .sname {
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .step .sdesc {
+      font-size: 0.65rem;
+      color: #888;
+      margin-top: 3px;
+    }
+    .sarrow {
+      color: #6a3ace;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    /* ── bottom row ── */
+    .bottom-row {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      width: 100%;
+      max-width: 760px;
+      margin-top: 4px;
+    }
+
+    /* legend */
+    .legend {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-top: 48px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      color: #aaa;
+    }
+    .legend-dot {
+      width: 12px; height: 12px;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🏦 Banking Support Chatbot</h1>
+<p class="subtitle">System Architecture &amp; RAG Pipeline</p>
+
+<div class="diagram">
+
+  <!-- USER -->
+  <div class="row">
+    <div class="box blue">
+      <div class="title">Client</div>
+      <div class="label">👤 User</div>
+      <div class="sub">Browser</div>
+    </div>
+  </div>
+
+  <div class="arrow-down">
+    <div class="line"></div>
+    <div class="head"></div>
+    <div class="alabel">HTTP Request</div>
+  </div>
+
+  <!-- FRONTEND -->
+  <div class="row">
+    <div class="box green">
+      <div class="title">Frontend</div>
+      <div class="label">💬 Chat UI</div>
+      <div class="sub">HTML · CSS · JavaScript</div>
+    </div>
+  </div>
+
+  <div class="arrow-down">
+    <div class="line"></div>
+    <div class="head"></div>
+    <div class="alabel">POST /chat &nbsp;|&nbsp; POST /upload &nbsp;|&nbsp; GET /health</div>
+  </div>
+
+  <!-- BACKEND -->
+  <div class="row">
+    <div class="box orange">
+      <div class="title">Backend</div>
+      <div class="label">⚡ FastAPI</div>
+      <div class="sub">main.py · Python</div>
+    </div>
+  </div>
+
+  <div class="arrow-down">
+    <div class="line"></div>
+    <div class="head"></div>
+    <div class="alabel">RAG Pipeline</div>
+  </div>
+
+  <!-- RAG BOX -->
+  <div class="rag-box">
+    <div class="rag-title">⚙️ RAG Pipeline — rag.py</div>
+    <div class="rag-steps">
+      <div class="step">
+        <div class="num">STEP 1</div>
+        <div class="sname">📥 Ingest</div>
+        <div class="sdesc">Read TXT / PDF</div>
+      </div>
+      <div class="sarrow">→</div>
+      <div class="step">
+        <div class="num">STEP 2</div>
+        <div class="sname">✂️ Chunk</div>
+        <div class="sdesc">500 char chunks<br>50 char overlap</div>
+      </div>
+      <div class="sarrow">→</div>
+      <div class="step">
+        <div class="num">STEP 3</div>
+        <div class="sname">🔢 Embed</div>
+        <div class="sdesc">Vector embeddings</div>
+      </div>
+      <div class="sarrow">→</div>
+      <div class="step">
+        <div class="num">STEP 4</div>
+        <div class="sname">🔍 Retrieve</div>
+        <div class="sdesc">Top 4 similar chunks</div>
+      </div>
+      <div class="sarrow">→</div>
+      <div class="step">
+        <div class="num">STEP 5</div>
+        <div class="sname">🤖 Generate</div>
+        <div class="sdesc">LLM + context</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="arrow-down">
+    <div class="line"></div>
+    <div class="head"></div>
+  </div>
+
+  <!-- BOTTOM: ChromaDB + Groq -->
+  <div class="bottom-row">
+    <div class="box teal" style="flex:1; max-width:320px;">
+      <div class="title">Vector Database</div>
+      <div class="label">🗄️ ChromaDB</div>
+      <div class="sub">Stores embeddings locally<br>Similarity search</div>
+    </div>
+    <div class="box purple" style="flex:1; max-width:320px;">
+      <div class="title">LLM Provider</div>
+      <div class="label">⚡ Groq</div>
+      <div class="sub">LLaMA 3.3 70B Versatile<br>Free tier · Ultra fast</div>
+    </div>
+  </div>
+
+  <div class="arrow-down" style="margin-top:8px;">
+    <div class="line"></div>
+    <div class="head"></div>
+    <div class="alabel">Deployed on</div>
+  </div>
+
+  <!-- DEPLOYMENT -->
+  <div class="row">
+    <div class="box red">
+      <div class="title">Cloud Deployment</div>
+      <div class="label">☁️ Render</div>
+      <div class="sub">Free tier · Public URL</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- LEGEND -->
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#1a3c6e;border:1px solid #2a5cae"></div> User / Client</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#1a4a2e;border:1px solid #2a8a4e"></div> Frontend</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#4a2a0a;border:1px solid #c87a1a"></div> Backend API</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#2a1a4e;border:1px solid #6a3ace"></div> RAG Pipeline</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#0a3a3a;border:1px solid #1a8a8a"></div> Vector DB</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#3a1a6e;border:1px solid #6a3ace"></div> LLM</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#4a1a1a;border:1px solid #c84a4a"></div> Deployment</div>
+</div>
+
+</body>
+</html>
